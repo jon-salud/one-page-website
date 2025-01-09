@@ -4,7 +4,10 @@
   "description": "A simple one-page website.",
   "main": "src/index.html",
   "scripts": {
-    "start": "open src/index.html"
+    "start": "open src/index.html",
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "npx eslint . --ext .js,.ts",
+    "format": "npx prettier --write ."
   },
   "keywords": [
     "one-page",
@@ -14,5 +17,11 @@
     "javascript"
   ],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.30.0",
+    "prettier": "^3.4.2"
+  }
 }

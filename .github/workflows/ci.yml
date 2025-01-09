@@ -1,57 +1,57 @@
 name: CI/CD Pipeline
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
-    workflow_dispatch: # Add this line to enable manual triggering
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Add this line to enable manual triggering
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v2
-              with:
-                  node-version: "14"
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
 
-            - name: Install dependencies
-              run: npm install
+      - name: Install dependencies
+        run: npm install
 
-            - name: Run tests
-              run: npm test
+      - name: Run tests
+        run: npm test
 
-    deploy:
-        runs-on: ubuntu-latest
-        needs: build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-            - name: Configure Git
-              run: |
-                  git config --global user.name "github-actions[bot]"
-                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-            - name: Print Git version
-              run: git --version
+      - name: Print Git version
+        run: git --version
 
-            - name: Print Git config
-              run: git config --list
+      - name: Print Git config
+        run: git config --list
 
-            - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-                  publish_dir: ./docs
-                  cname: ""
-                  user_name: "github-actions[bot]"
-                  user_email: "github-actions[bot]@users.noreply.github.com"
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          publish_dir: ./docs
+          cname: ""
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
