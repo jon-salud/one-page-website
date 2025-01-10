@@ -114,6 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#loginModal').hide();
   });
 
+  // Ensure dataRows is defined
+  if (!window.dataRows) {
+    console.error('dataRows is not defined');
+    return;
+  }
+
   // Sample data for table
   let data = window.dataRows || [];
   let currentPage = 1;
