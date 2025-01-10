@@ -154,4 +154,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderTable(currentPage);
+
+  // Dropdown menu
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  dropdownMenu.addEventListener('change', (event) => {
+    alert(`You selected: ${event.target.value}`);
+  });
+
+  // Tooltip
+  const tooltipText = document.getElementById('tooltipText');
+  tooltipText.addEventListener('mouseover', () => {
+    tooltipText.setAttribute('title', 'This is a tooltip!');
+  });
 });

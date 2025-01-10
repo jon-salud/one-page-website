@@ -168,3 +168,10 @@ footer {
   background-color: #4caf50;
   color: white;
 }
+
+/* Add CSS rule for tooltip text */
+#tooltipText {
+  color: #ff6347; /* Change the color to a distinguishable one */
+  font-weight: bold;
+  cursor: pointer;
+}
