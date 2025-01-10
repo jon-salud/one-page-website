@@ -197,10 +197,14 @@
           Instruction: Use the "Previous" and "Next" buttons to navigate through
           the table pages. Edit the Date of Birth and Comment columns directly.
         </p>
+        <div class="table-controls">
+          <button id="saveChanges" class="small-button">Save</button>
+          <button id="refreshTable" class="small-button">Refresh</button>
+        </div>
         <table id="dataTable">
           <thead>
             <tr>
-              <th>ID</th>
+              <!-- <th class="id-column">ID</th> -->
               <th>Name</th>
               <th>Date of Birth</th>
               <th>Age</th>
@@ -349,7 +353,7 @@
           tbody.empty();
           rows.forEach((row) => {
             tbody.append(
-              "<tr><td>" +
+              "<tr><td style='display: none;'>" +
                 row.id +
                 "</td><td>" +
                 row.name +
@@ -376,6 +380,14 @@
             currentPage++;
             renderTable(currentPage);
           }
+        });
+
+        $("#saveChanges").on("click", function () {
+          // Save changes logic here
+        });
+
+        $("#refreshTable").on("click", function () {
+          renderTable(currentPage);
         });
 
         renderTable(currentPage);

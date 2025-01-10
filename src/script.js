@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rows.forEach((row) => {
       tbody.append(
         `<tr>
-          <td>${row.id}</td>
+          <td style="display: none;">${row.id}</td>
           <td>${row.name}</td>
           <td contenteditable="true" class="dob">${row.dob}</td>
           <td class="age">${calculateAge(row.dob)}</td>
@@ -168,11 +168,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const dob = $(this).text();
     const ageCell = row.find('.age');
     ageCell.text(calculateAge(dob));
+    const rowIndex = row.index() + (currentPage - 1) * rowsPerPage;
+    data[rowIndex].dob = dob;
   });
 
   $('#dataTable').on('input', '.comment', function () {
-    const rowIndex = $(this).closest('tr').index();
+    const rowIndex = $(this).closest('tr').index() + (currentPage - 1) * rowsPerPage;
     data[rowIndex].comment = $(this).text();
+  });
+
+  $('#saveChanges').on('click', function () {
+    alert('Changes saved!');
+  });
+
+  $('#refreshTable').on('click', function () {
+    data = window.dataRows.map(row => ({ ...row }));
+    renderTable(currentPage);
   });
 
   renderTable(currentPage);

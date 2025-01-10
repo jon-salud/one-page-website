@@ -297,3 +297,16 @@ footer {
   border: 1px solid #ddd;
   margin: 0.5em 0;
 }
+
+/* Table controls styles */
+.table-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Small button styles */
+.small-button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
