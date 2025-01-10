@@ -2,9 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById('myButton');
   const output = document.getElementById('output');
 
-  button.addEventListener('click', () => {
-    output.textContent = 'Button clicked! Welcome to my one-page website!';
-  });
+  if (button) {
+    button.addEventListener('click', () => {
+      output.textContent = 'Button clicked! Welcome to my one-page website!';
+    });
+  }
 
   // Sample data for search
   const searchData = [
@@ -157,13 +159,161 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dropdown menu
   const dropdownMenu = document.getElementById('dropdownMenu');
-  dropdownMenu.addEventListener('change', (event) => {
-    alert(`You selected: ${event.target.value}`);
-  });
+  if (dropdownMenu) {
+    dropdownMenu.addEventListener('change', (event) => {
+      alert(`You selected: ${event.target.value}`);
+    });
+  }
 
   // Tooltip
   const tooltipText = document.getElementById('tooltipText');
-  tooltipText.addEventListener('mouseover', () => {
-    tooltipText.setAttribute('title', 'This is a tooltip!');
+  if (tooltipText) {
+    tooltipText.addEventListener('mouseover', () => {
+      tooltipText.setAttribute('title', 'This is a tooltip!');
+    });
+  }
+
+  // Accordion
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach((header) => {
+    header.addEventListener('click', () => {
+      console.log('Accordion header clicked:', header.textContent); // Debugging step
+      const content = header.nextElementSibling;
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      header.classList.toggle('active');
+    });
   });
+
+  // Tabs
+  const tabs = document.querySelectorAll('.tab');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('active'));
+      tabContents.forEach((c) => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Progress bar
+  const startProgress = document.getElementById('startProgress');
+  const progress = document.getElementById('progress');
+  if (startProgress) {
+    startProgress.addEventListener('click', () => {
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+        } else {
+          width++;
+          progress.style.width = width + '%';
+        }
+      }, 100);
+    });
+  }
+
+  // Notification toasts
+  const showNotification = document.getElementById('showNotification');
+  const notificationToast = document.getElementById('notificationToast');
+  if (showNotification && notificationToast) {
+    showNotification.addEventListener('click', () => {
+      console.log('Show Notification button clicked'); // Debugging step
+      notificationToast.style.display = 'block';
+      console.log('Notification toast display:', notificationToast.style.display); // Debugging step
+      notificationToast.style.backgroundColor = '#808080'; // Ensure background color is set to grey
+      notificationToast.style.color = 'white'; // Ensure text color is set
+      setTimeout(() => {
+        notificationToast.style.display = 'none';
+        console.log('Notification toast hidden:', notificationToast.style.display); // Debugging step
+      }, 3000);
+    });
+  }
+
+  // File upload
+  const fileUpload = document.getElementById('fileUpload');
+  if (fileUpload) {
+    fileUpload.addEventListener('change', (event) => {
+      alert(`File uploaded: ${event.target.files[0].name}`);
+    });
+  }
+
+  // Autocomplete
+  const autocompleteInput = document.getElementById('autocompleteInput');
+  const autocompleteResults = document.getElementById('autocompleteResults');
+  const autocompleteData = ['apple', 'banana', 'cherry', 'date', 'fig', 'grape', 'kiwi'];
+  if (autocompleteInput) {
+    autocompleteInput.addEventListener('input', () => {
+      const query = autocompleteInput.value.toLowerCase();
+      const results = autocompleteData.filter((item) => item.includes(query));
+      autocompleteResults.innerHTML = results.map((item) => `<p>${item}</p>`).join('');
+    });
+  }
+
+  // Drag and drop
+  const dragDropList = document.getElementById('dragDropList');
+  let draggedItem = null;
+  if (dragDropList) {
+    dragDropList.addEventListener('dragstart', (event) => {
+      draggedItem = event.target;
+      setTimeout(() => {
+        event.target.style.display = 'none';
+      }, 0);
+    });
+    dragDropList.addEventListener('dragend', () => {
+      setTimeout(() => {
+        draggedItem.style.display = 'block';
+        draggedItem = null;
+      }, 0);
+    });
+    dragDropList.addEventListener('dragover', (event) => {
+      event.preventDefault();
+    });
+    dragDropList.addEventListener('dragenter', (event) => {
+      if (event.target.tagName === 'LI') {
+        event.target.style.border = '1px dashed #000';
+      }
+    });
+    dragDropList.addEventListener('dragleave', (event) => {
+      if (event.target.tagName === 'LI') {
+        event.target.style.border = '1px solid #ddd';
+      }
+    });
+    dragDropList.addEventListener('drop', (event) => {
+      event.preventDefault();
+      if (event.target.tagName === 'LI') {
+        event.target.style.border = '1px solid #ddd';
+        dragDropList.insertBefore(draggedItem, event.target.nextSibling);
+      }
+    });
+  }
+
+  // Date range picker
+  flatpickr('#dateRangePicker', {
+    mode: 'range',
+    dateFormat: 'Y-m-d',
+  });
+
+  // Rating system
+  const stars = document.querySelectorAll('.star');
+  stars.forEach((star) => {
+    star.addEventListener('click', () => {
+      stars.forEach((s) => s.classList.remove('selected'));
+      star.classList.add('selected');
+      alert(`You rated: ${star.dataset.value} stars`);
+    });
+  });
+
+  // Search filter
+  const searchFilterInput = document.getElementById('searchFilterInput');
+  const searchFilterList = document.getElementById('searchFilterList');
+  if (searchFilterInput) {
+    searchFilterInput.addEventListener('input', () => {
+      const query = searchFilterInput.value.toLowerCase();
+      const items = searchFilterList.querySelectorAll('li');
+      items.forEach((item) => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? 'block' : 'none';
+      });
+    });
+  }
 });
