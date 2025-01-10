@@ -1,13 +1,12 @@
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
     branches:
-      - '**' # Run on any branch
+      - main
   pull_request:
     branches:
-      - '**' # Run on any branch
-  workflow_dispatch: # Enable manual triggering
+      - main
 
 jobs:
   build:
@@ -25,8 +24,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run lint
+        run: npm run lint
+
       - name: Run tests
         run: npm test
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: docs/
 
   deploy:
     runs-on: ubuntu-latest
@@ -36,22 +47,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Print Git version
-        run: git --version
-
-      - name: Print Git config
-        run: git config --list
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: docs/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          publish_dir: ./docs
-          cname: ''
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_dir: docs
