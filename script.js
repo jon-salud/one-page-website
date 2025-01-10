@@ -114,15 +114,28 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#loginModal').hide();
   });
 
-  // Table with pagination
-  let data = [];
-  for (let i = 1; i <= 35; i++) {
-    data.push({ id: i, name: 'Name ' + i, value: 'Value ' + i });
-  }
+  // Sample data for table
+  let data = window.dataRows || [];
   let currentPage = 1;
   let rowsPerPage = 10;
 
+  function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
   function renderTable(page) {
+    if (!Array.isArray(data)) {
+      console.error('Data is not an array:', data); // Debugging step
+      return;
+    }
+
     let start = (page - 1) * rowsPerPage;
     let end = start + rowsPerPage;
     let rows = data.slice(start, end);
@@ -130,13 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.empty();
     rows.forEach((row) => {
       tbody.append(
-        '<tr><td>' +
-          row.id +
-          '</td><td>' +
-          row.name +
-          '</td><td>' +
-          row.value +
-          '</td></tr>',
+        `<tr>
+          <td style="display: none;">${row.id}</td>
+          <td>${row.name}</td>
+          <td contenteditable="true" class="dob">${row.dob}</td>
+          <td class="age">${calculateAge(row.dob)}</td>
+          <td contenteditable="true" class="comment">${row.comment}</td>
+        </tr>`
       );
     });
   }
@@ -153,6 +166,33 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPage++;
       renderTable(currentPage);
     }
+  });
+
+  $('#dataTable').on('blur input', '.dob', function () {
+    const row = $(this).closest('tr');
+    const dob = $(this).text();
+    const ageCell = row.find('.age');
+    ageCell.text(calculateAge(dob));
+    const rowIndex = row.index() + (currentPage - 1) * rowsPerPage;
+    data[rowIndex].dob = dob;
+  });
+
+  $('#dataTable').on('input', '.comment', function () {
+    const rowIndex = $(this).closest('tr').index() + (currentPage - 1) * rowsPerPage;
+    data[rowIndex].comment = $(this).text();
+  });
+
+  $('#saveChanges').on('click', function () {
+    // Trigger the blur and input events on all .dob elements
+    $('#dataTable .dob').trigger('blur');
+    $('#dataTable .dob').trigger('input');
+    
+    alert('Changes saved!');
+  });
+
+  $('#refreshTable').on('click', function () {
+    data = window.dataRows.map(row => ({ ...row }));
+    renderTable(currentPage);
   });
 
   renderTable(currentPage);
@@ -177,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
   accordionHeaders.forEach((header) => {
     header.addEventListener('click', () => {
-      console.log('Accordion header clicked:', header.textContent); // Debugging step
       const content = header.nextElementSibling;
       content.style.display = content.style.display === 'block' ? 'none' : 'block';
       header.classList.toggle('active');
@@ -218,14 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const notificationToast = document.getElementById('notificationToast');
   if (showNotification && notificationToast) {
     showNotification.addEventListener('click', () => {
-      console.log('Show Notification button clicked'); // Debugging step
       notificationToast.style.display = 'block';
-      console.log('Notification toast display:', notificationToast.style.display); // Debugging step
       notificationToast.style.backgroundColor = '#808080'; // Ensure background color is set to grey
       notificationToast.style.color = 'white'; // Ensure text color is set
       setTimeout(() => {
         notificationToast.style.display = 'none';
-        console.log('Notification toast hidden:', notificationToast.style.display); // Debugging step
       }, 3000);
     });
   }
