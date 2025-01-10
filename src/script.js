@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Sample data for table
-  let data = window.dataRows;
+  let data = window.dataRows || [];
   let currentPage = 1;
   let rowsPerPage = 10;
 
@@ -131,6 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderTable(page) {
+    if (!Array.isArray(data)) {
+      console.error('Data is not an array:', data); // Debugging step
+      return;
+    }
+
     let start = (page - 1) * rowsPerPage;
     let end = start + rowsPerPage;
     let rows = data.slice(start, end);
@@ -212,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
   accordionHeaders.forEach((header) => {
     header.addEventListener('click', () => {
-      console.log('Accordion header clicked:', header.textContent); // Debugging step
       const content = header.nextElementSibling;
       content.style.display = content.style.display === 'block' ? 'none' : 'block';
       header.classList.toggle('active');
@@ -253,14 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const notificationToast = document.getElementById('notificationToast');
   if (showNotification && notificationToast) {
     showNotification.addEventListener('click', () => {
-      console.log('Show Notification button clicked'); // Debugging step
       notificationToast.style.display = 'block';
-      console.log('Notification toast display:', notificationToast.style.display); // Debugging step
       notificationToast.style.backgroundColor = '#808080'; // Ensure background color is set to grey
       notificationToast.style.color = 'white'; // Ensure text color is set
       setTimeout(() => {
         notificationToast.style.display = 'none';
-        console.log('Notification toast hidden:', notificationToast.style.display); // Debugging step
       }, 3000);
     });
   }
