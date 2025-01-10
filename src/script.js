@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $('#refreshTable').on('click', function () {
     data = window.dataRows.map(row => ({ ...row }));
+    currentPage = 1; // Reset to the first page
     renderTable(currentPage);
   });
 
