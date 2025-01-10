@@ -15,7 +15,7 @@
 
   <body>
     <header>
-      <h1>Welcome to My One Page Website</h1>
+      <h1>Welcome to My One Page Website  - in progress</h1>
     </header>
     <div class="container">
       <section id="about" class="section">
@@ -195,14 +195,16 @@
         <h2>Table</h2>
         <p>
           Instruction: Use the "Previous" and "Next" buttons to navigate through
-          the table pages.
+          the table pages. Edit the Date of Birth and Comment columns directly.
         </p>
         <table id="dataTable">
           <thead>
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Value</th>
+              <th>Date of Birth</th>
+              <th>Age</th>
+              <th>Comment</th>
             </tr>
           </thead>
           <tbody>
@@ -218,6 +220,7 @@
     <footer>
       <p>&copy; 2023 My One Page Website</p>
     </footer>
+    <script src="../data/data.js"></script>
     <script src="script.js"></script>
     <script>
       $(document).ready(function () {
@@ -328,12 +331,15 @@
         });
 
         // Table with pagination
-        let data = [];
-        for (let i = 1; i <= 35; i++) {
-          data.push({ id: i, name: "Name " + i, value: "Value " + i });
-        }
+        let data = dataRows;
         let currentPage = 1;
         let rowsPerPage = 10;
+
+        function calculateAge(dob) {
+          let diff = Date.now() - new Date(dob).getTime();
+          let age = new Date(diff).getUTCFullYear() - 1970;
+          return age;
+        }
 
         function renderTable(page) {
           let start = (page - 1) * rowsPerPage;
@@ -347,8 +353,12 @@
                 row.id +
                 "</td><td>" +
                 row.name +
+                "</td><td contenteditable='true'>" +
+                row.dob +
                 "</td><td>" +
-                row.value +
+                calculateAge(row.dob) +
+                "</td><td contenteditable='true'>" +
+                row.comment +
                 "</td></tr>",
             );
           });
