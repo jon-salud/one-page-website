@@ -10,6 +10,15 @@ one-page-website
 │   ├── index.html      # Main HTML document
 │   ├── styles.css      # CSS styles for the website
 │   └── script.js       # JavaScript code for interactivity
+├── docs                # Build output for deployment
+│   ├── index.html
+│   ├── styles.css
+│   ├── script.js
+│   └── data
+│       └── data.js
+├── .github
+│   └── workflows
+│       └── ci.yml      # GitHub Actions CI configuration
 ├── package.json        # npm configuration file
 └── README.md           # Project documentation
 ```
@@ -21,6 +30,18 @@ one-page-website
 - **Login Field**: Enter the username "userone" and the password "pwordone". Any other values will raise an error modal notification.
 - **Date and Time Fields**: Click on the input fields to select a date and time.
 - **Paginated Table**: Use the "Previous" and "Next" buttons to navigate through the table pages.
+- **Dropdown Menu**
+- **Tooltip**
+- **Accordion**
+- **Tabs**
+- **Progress Bar**
+- **Notification Toasts**
+- **File Upload**
+- **Autocomplete**
+- **Drag and Drop**
+- **Date Range Picker**
+- **Rating System**
+- **Search Filter**
 
 ## Getting Started
 
@@ -59,6 +80,16 @@ To check the code for coding standards and potential issues, run:
 ```sh
 npm run lint
 ```
+
+### Building the Project
+
+To build the project for deployment, run:
+
+```sh
+npm run build
+```
+
+This will create a `docs` folder with the necessary files for deployment.
 
 ### Deployment
 
