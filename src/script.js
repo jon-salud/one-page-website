@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  $('#dataTable').on('blur', '.dob', function () {
+  $('#dataTable').on('blur input', '.dob', function () {
     const row = $(this).closest('tr');
     const dob = $(this).text();
     const ageCell = row.find('.age');
@@ -178,6 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $('#saveChanges').on('click', function () {
+    // Trigger the blur and input events on all .dob elements
+    $('#dataTable .dob').trigger('blur');
+    $('#dataTable .dob').trigger('input');
+    
     alert('Changes saved!');
   });
 
