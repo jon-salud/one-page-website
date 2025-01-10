@@ -114,13 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#loginModal').hide();
   });
 
-  // Table with pagination
-  let data = [];
-  for (let i = 1; i <= 35; i++) {
-    data.push({ id: i, name: 'Name ' + i, value: 'Value ' + i });
-  }
+  // Sample data for table
+  let data = window.dataRows;
   let currentPage = 1;
   let rowsPerPage = 10;
+
+  function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
 
   function renderTable(page) {
     let start = (page - 1) * rowsPerPage;
@@ -130,13 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.empty();
     rows.forEach((row) => {
       tbody.append(
-        '<tr><td>' +
-          row.id +
-          '</td><td>' +
-          row.name +
-          '</td><td>' +
-          row.value +
-          '</td></tr>',
+        `<tr>
+          <td style="display: none;">${row.id}</td>
+          <td>${row.name}</td>
+          <td contenteditable="true" class="dob">${row.dob}</td>
+          <td class="age">${calculateAge(row.dob)}</td>
+          <td contenteditable="true" class="comment">${row.comment}</td>
+        </tr>`
       );
     });
   }
@@ -153,6 +161,33 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPage++;
       renderTable(currentPage);
     }
+  });
+
+  $('#dataTable').on('blur input', '.dob', function () {
+    const row = $(this).closest('tr');
+    const dob = $(this).text();
+    const ageCell = row.find('.age');
+    ageCell.text(calculateAge(dob));
+    const rowIndex = row.index() + (currentPage - 1) * rowsPerPage;
+    data[rowIndex].dob = dob;
+  });
+
+  $('#dataTable').on('input', '.comment', function () {
+    const rowIndex = $(this).closest('tr').index() + (currentPage - 1) * rowsPerPage;
+    data[rowIndex].comment = $(this).text();
+  });
+
+  $('#saveChanges').on('click', function () {
+    // Trigger the blur and input events on all .dob elements
+    $('#dataTable .dob').trigger('blur');
+    $('#dataTable .dob').trigger('input');
+    
+    alert('Changes saved!');
+  });
+
+  $('#refreshTable').on('click', function () {
+    data = window.dataRows.map(row => ({ ...row }));
+    renderTable(currentPage);
   });
 
   renderTable(currentPage);
