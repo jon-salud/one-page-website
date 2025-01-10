@@ -30,7 +30,7 @@
       <section id="search" class="section">
         <h2>Search</h2>
         <p>
-          Instruction: Key in your search criteria (e.g., 'test') then select
+          Instruction: Key in your search criteria (e.g., "test") then select
           via mouse click or arrow keys and tab out.
         </p>
         <input type="text" id="searchField" placeholder="Search..." />
@@ -47,7 +47,7 @@
       <section id="login" class="section">
         <h2>Login</h2>
         <p>
-          Instruction: Enter the username 'userone' and the password 'pwordone'.
+          Instruction: Enter the username "userone" and the password "pwordone".
           Any other values will raise an error modal notification.
         </p>
         <input type="text" id="username" placeholder="Username" />
@@ -69,7 +69,7 @@
       <section id="table" class="section">
         <h2>Table</h2>
         <p>
-          Instruction: Use the 'Previous' and 'Next' buttons to navigate through
+          Instruction: Use the "Previous" and "Next" buttons to navigate through
           the table pages.
         </p>
         <table id="dataTable">
@@ -88,6 +88,129 @@
           <button id="prevPage">Previous</button>
           <button id="nextPage">Next</button>
         </div>
+      </section>
+      <section id="dropdown" class="section">
+        <h2>Dropdown Menu</h2>
+        <p>Instruction: Select an option from the dropdown menu.</p>
+        <select id="dropdownMenu" title="Select an option">
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </section>
+      <section id="tooltip" class="section">
+        <h2>Tooltip</h2>
+        <p>
+          Instruction: Hover over the text to see the tooltip.
+          <span id="tooltipText" title="This is a tooltip!">Hover over me</span>
+        </p>
+      </section>
+      <section id="accordion" class="section">
+        <h2>Accordion</h2>
+        <p>Instruction: Click on the headers to expand/collapse the content.</p>
+        <div class="accordion">
+          <div class="accordion-item">
+            <h3 class="accordion-header">Section 1</h3>
+            <div class="accordion-content">
+              <p>Content for section 1.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header">Section 2</h3>
+            <div class="accordion-content">
+              <p>Content for section 2.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header">Section 3</h3>
+            <div class="accordion-content">
+              <p>Content for section 3.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="tabs" class="section">
+        <h2>Tabs</h2>
+        <p>Instruction: Click on the tabs to switch between content.</p>
+        <div class="tabs">
+          <ul class="tab-list">
+            <li class="tab active" data-tab="tab1">Tab 1</li>
+            <li class="tab" data-tab="tab2">Tab 2</li>
+            <li class="tab" data-tab="tab3">Tab 3</li>
+          </ul>
+          <div class="tab-content active" id="tab1">
+            <p>Content for tab 1.</p>
+          </div>
+          <div class="tab-content" id="tab2">
+            <p>Content for tab 2.</p>
+          </div>
+          <div class="tab-content" id="tab3">
+            <p>Content for tab 3.</p>
+          </div>
+        </div>
+      </section>
+      <section id="progress-bar" class="section">
+        <h2>Progress Bar</h2>
+        <p>Instruction: Click the button to start the progress.</p>
+        <button id="startProgress">Start Progress</button>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </section>
+      <section id="notification" class="section">
+        <h2>Notification Toasts</h2>
+        <p>Instruction: Click the button to show a notification.</p>
+        <button id="showNotification">Show Notification</button>
+        <div id="notificationToast" class="notification-toast">This is a notification!</div>
+      </section>
+      <section id="file-upload" class="section">
+        <h2>File Upload</h2>
+        <p>Instruction: Upload a file using the input below.</p>
+        <label for="fileUpload">Upload a file:</label>
+        <input type="file" id="fileUpload" title="Upload a file" />
+      </section>
+      <section id="autocomplete" class="section">
+        <h2>Autocomplete</h2>
+        <p>Instruction: Start typing to see suggestions.</p>
+        <input type="text" id="autocompleteInput" placeholder="Type to search..." />
+        <div id="autocompleteResults"></div>
+      </section>
+      <section id="drag-drop" class="section">
+        <h2>Drag and Drop</h2>
+        <p>Instruction: Drag the items to reorder them.</p>
+        <ul id="dragDropList">
+          <li draggable="true">Item 1</li>
+          <li draggable="true">Item 2</li>
+          <li draggable="true">Item 3</li>
+        </ul>
+      </section>
+      <section id="date-range-picker" class="section">
+        <h2>Date Range Picker</h2>
+        <p>Instruction: Select a date range using the input below.</p>
+        <input type="text" id="dateRangePicker" placeholder="Select date range" />
+      </section>
+      <section id="rating" class="section">
+        <h2>Rating System</h2>
+        <p>Instruction: Click on the stars to rate.</p>
+        <div class="rating">
+          <span class="star" data-value="1">&#9733;</span>
+          <span class="star" data-value="2">&#9733;</span>
+          <span class="star" data-value="3">&#9733;</span>
+          <span class="star" data-value="4">&#9733;</span>
+          <span class="star" data-value="5">&#9733;</span>
+        </div>
+      </section>
+      <section id="search-filter" class="section">
+        <h2>Search Filter</h2>
+        <p>Instruction: Type to filter the list below.</p>
+        <input type="text" id="searchFilterInput" placeholder="Filter items..." />
+        <ul id="searchFilterList">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+          <li>Item 4</li>
+          <li>Item 5</li>
+        </ul>
       </section>
     </div>
     <footer>
@@ -124,7 +247,7 @@
                     results
                       .map(
                         (item, index) =>
-                          `<p class='search-item' data-index='${index}'>${item}</p>`,
+                          `<p class="search-item" data-index="${index}">${item}</p>`,
                       )
                       .join(""),
                   )
